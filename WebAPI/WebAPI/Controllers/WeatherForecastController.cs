@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -18,9 +19,16 @@ namespace WebAPI.Controllers
             _logger = logger;
         }
 
+        //[Authorize]
+        [Authorize(Policy = "Admin")]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            // If you need access to the accesstoken here, then this is a possible solution
+            var request = HttpContext.Request;
+            var headers = request.Headers;
+            string? authorizationHeader = headers["Authorization"];
+            string? access_token = (authorizationHeader == null) ? null : authorizationHeader.Split(' ')[1];
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
