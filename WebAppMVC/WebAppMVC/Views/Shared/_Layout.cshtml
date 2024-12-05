@@ -25,6 +25,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if (ViewBag.name == null)
+                        {
+                            <li class="nav-item">
+                                <a href="authentication/login" class="btn btn-warning">Login</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a href="authentication/logout" class="btn btn-warning">Logout</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
